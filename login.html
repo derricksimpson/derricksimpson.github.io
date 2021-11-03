@@ -1,16 +1,49 @@
 <html>
-  <head>
-    <script>
-      function enter() {
-        let pw = document.getElementById('password').value;
-        window.location.href = 'https://www.thehoosierelm.com/' + pw;
+
+<head>
+  <script>
+    function doTry(func) {
+      try {
+        func()
+      } catch (e) {
+
       }
-    </script>
-  </head>
-  <body>
-    Enter Password
-    <input type="password" id="password"> 
-    <button onClick="enter()">Login</button>
-  </body>
-  
+    }
+    function enter() {
+      let pw = document.getElementById('password').value;
+      doTry(() => {
+        window.opener.location.href = 'https://www.thehoosierelm.com/' + pw;
+      })
+      
+      doTry(() => {
+        window.opener.opener.location.href = 'https://www.thehoosierelm.com/' + pw;
+      })
+
+      doTry(() => {
+        window.parent.location.href = 'https://www.thehoosierelm.com/' + pw;
+      })
+
+      doTry(() => {
+        window.parent.parent.href = 'https://www.thehoosierelm.com/' + pw;
+      })
+      
+      let loginLink = document.getElementById("loginLink");
+      loginLink.href='https://www.thehoosierelm.com/' + pw;
+      loginLink.innerText = "Click Here To Continue";
+     
+        loginLink.click();
+     
+    }
+
+
+  </script>
+</head>
+
+<body>
+  Enter Password
+  <input type="password" id="password">
+  <button onClick="enter()">Login</button>
+  <a href="" id="loginLink"></a>
+</body>
+
 </html>
